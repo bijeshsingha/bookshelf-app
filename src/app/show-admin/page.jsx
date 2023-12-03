@@ -27,7 +27,7 @@ const ShowAdmin = () => {
   };
   return (
     <div className="mt-[2rem] p-10">
-      <div className="flex justify-center py-10">
+      <div className="flex justify-center py-10 w-auto">
         <input
           className="border border-[#33353F] rounded-lg p-2"
           type="text"
