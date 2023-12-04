@@ -8,7 +8,6 @@ const ShowAdmin = () => {
   const handleSearch = () => {
     const searchTerm = localSearch;
     setSearch(() => searchTerm);
-    console.log(searchTerm)
   };
 
   const handleInputChange = (e) => {

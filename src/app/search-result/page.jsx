@@ -4,12 +4,24 @@ import { useStateContext } from "../context/ContextProvider";
 
 const SearchResult = () => {
   const { search, books } = useStateContext();
-  const filteredBooks = books.filter(
-    (book) =>
-      book.isbn.includes(search) ||
-      book.title.toLowerCase().includes(search)
-  );
-  console.log(filteredBooks);
+
+  const filteredBooks = books.filter((book) => {
+    let bookTitle = String(book.title).toLowerCase().trim();
+    let bookISBN = String(book.isbn).toLowerCase().trim();
+    let toSearch = String(search).toLowerCase().trim();
+
+    return (
+      bookTitle.indexOf(toSearch) !== -1 || bookISBN.indexOf(toSearch) !== -1
+    );
+  });
+  /*{
+        
+          console.log( toSearch + "->" + bookTitle )
+      console.log(bookTitle.toLowerCase().indexOf(toSearch))
+        console.log( toSearch + "->" + bookTitle + " = " + bookTitle.includes(toSearch))
+        const bookISBN = book.isbn
+        return true
+    }*/
   return (
     <div className="mt-[5rem] p-10">
       Search Result for: {search}

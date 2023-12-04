@@ -39,7 +39,7 @@ const Admin = () => {
   }, [books]);
 
   return (
-    <div className="lg:w-1/3 w-full ">
+    <div className="lg:w-1/3 w-full py-10">
       <h2 className="text-center text-xl font-semibold pb-10">Add Book</h2>
       <div className="flex flex-col justify-center gap-10 w-full ">
         <input
