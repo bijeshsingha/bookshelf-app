@@ -26,9 +26,9 @@ const ShowAdmin = () => {
   };
   return (
     <div className="mt-[2rem] p-10">
-      <div className="flex justify-center py-10 w-auto">
+      <div className="flex justify-center py-10 w-auto text-black gap-5">
         <input
-          className="border border-[#33353F] rounded-lg p-2"
+          className="border border-[#33353F] rounded-lg p-2 placeholder-[#8B8B8B] placeholder-opacity-50"
           type="text"
           name="search"
           placeholder="Search by ISBN or Title"

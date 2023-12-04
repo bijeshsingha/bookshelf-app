@@ -11,7 +11,7 @@ const Book = ({ params }) => {
   //to update the value of the book
   const newArray = books;
   const indexToFind = newArray.findIndex((item) => item.isbn === params.bookId);
-  const [newBook, setNewBook] = useState({...newArray[indexToFind]});
+  const [newBook, setNewBook] = useState({ ...newArray[indexToFind] });
 
   //handle input for the edit
   const handleInputChange = (e) => {
@@ -23,13 +23,20 @@ const Book = ({ params }) => {
     setIsEdit(!isEdit);
     newArray[indexToFind] = { ...newArray[indexToFind], ...newBook };
     setBooks(newArray);
-    
   };
 
   //to display the particular book
   const filteredBooks = books.filter(
     (book) => book.isbn.toLowerCase() === params.bookId
   );
+
+  const handleRemove = (isbn) => {
+    console.log(isbn);
+    const filtered = books.filter(function (book) {
+      return book.isbn != isbn;
+    });
+    setBooks(filtered);
+  };
 
   return (
     <div className="mt-[5rem] p-10 ">
@@ -48,7 +55,7 @@ const Book = ({ params }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredBooks.map((book, index) => (
+          {filteredBooks.length > 0 ?  filteredBooks.map((book, index) => (
             <tr key={index} className="">
               <td>{index}</td>
               <td>{book.isbn}</td>
@@ -59,74 +66,76 @@ const Book = ({ params }) => {
               <td>{book.cost}</td>
               <td>{book.availablity}</td>
             </tr>
-          ))}
-          {isEdit && <tr>
-            <td></td>
-            <td></td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2 w-full"
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={newBook.title}
-                onChange={handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2"
-                type="text"
-                name="category"
-                placeholder="category"
-                value={newBook.category}
-                onChange={handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2"
-                type="number"
-                name="row_number"
-                placeholder="row number"
-                value={newBook.row_number}
-                onChange={handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2"
-                type="number"
-                name="count"
-                placeholder="count"
-                value={newBook.count}
-                onChange={handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2"
-                type="number"
-                name="cost"
-                placeholder="cost"
-                value={newBook.cost}
-                onChange={handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                className="border border-[#33353F] rounded-lg p-2"
-                type="text"
-                name="availablity"
-                placeholder="availability"
-                value={newBook.availablity}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>}
+          )) : <div>The record has been successfully removed</ div>}
+          {isEdit && (
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2 w-full"
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  value={newBook.title}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2"
+                  type="text"
+                  name="category"
+                  placeholder="category"
+                  value={newBook.category}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2"
+                  type="number"
+                  name="row_number"
+                  placeholder="row number"
+                  value={newBook.row_number}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2"
+                  type="number"
+                  name="count"
+                  placeholder="count"
+                  value={newBook.count}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2"
+                  type="number"
+                  name="cost"
+                  placeholder="cost"
+                  value={newBook.cost}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td>
+                <input
+                  className="border border-[#33353F] rounded-lg p-2"
+                  type="text"
+                  name="availablity"
+                  placeholder="availability"
+                  value={newBook.availablity}
+                  onChange={handleInputChange}
+                />
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
-      <div className="flex flex-col justify-center gap-10 w-full ">
+      <div className="flex flex-col justify-center mt-2 gap-2 w-full ">
         {!isEdit ? (
           <button
             className="border px-5 py-2 shadow-md"
@@ -144,6 +153,9 @@ const Book = ({ params }) => {
             Save Book
           </button>
         )}
+        <button className="border px-5 py-2 shadow-md" onClick={() => handleRemove(params.bookId)}>
+          Remove
+        </button>
       </div>
     </div>
   );
