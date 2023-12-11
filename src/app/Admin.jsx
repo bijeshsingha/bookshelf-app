@@ -19,8 +19,15 @@ const Admin = () => {
 
   const handleAddBook = () => {
     const isDuplicate = books.some((book) => book.isbn === newBook.isbn);
+    if (newBook.isbn === "") {
+      alert("Please provide an ISBN number");
+      return;
+    }
     if (!isDuplicate) {
+      alert("Book added successfully");
       setBooks((prevState) => [...prevState, newBook]);
+    } else {
+      alert("ISBN is duplicate! Please provide a unique ISBN");
     }
     setNewBook({
       title: "",
@@ -35,7 +42,6 @@ const Admin = () => {
 
   useEffect(() => {
     localStorage.setItem("books", JSON.stringify(books));
-    console.log(localStorage.getItem("books"));
   }, [books]);
 
   return (

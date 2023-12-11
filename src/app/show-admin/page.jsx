@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import Link from "next/link";
+import QRCodeComponent from "../qr-code/QRCode";
+import { useRouter } from "next/navigation";
 const ShowAdmin = () => {
   const { books, setBooks, search, setSearch } = useStateContext();
   const [localSearch, setLocalSearch] = useState(" ");
@@ -9,6 +11,8 @@ const ShowAdmin = () => {
     const searchTerm = localSearch;
     setSearch(() => searchTerm);
   };
+
+  const router = useRouter()
 
   const handleInputChange = (e) => {
     // Get the value from the input
@@ -18,7 +22,6 @@ const ShowAdmin = () => {
   };
 
   const handleRemove = (isbn) => {
-    console.log(isbn);
     const filtered = books.filter(function (book) {
       return book.isbn != isbn;
     });
@@ -58,6 +61,7 @@ const ShowAdmin = () => {
             <th>cost</th>
             <th>availablity</th>
             <th>Action</th>
+            <th>QR Code</th>
           </tr>
         </thead>
         <tbody>
@@ -73,9 +77,12 @@ const ShowAdmin = () => {
               <td>{book.count}</td>
               <td>{book.cost}</td>
               <td>{book.availablity}</td>
-              <td className="flex gap-10 justify-center">
-                <Link href={`/books/${book.isbn}`}>Edit</Link>
+              <td className="">
+                <Link  href={`/books/${book.isbn}`}>
+                  <button className='border-2 px-2'>Edit</button>
+                  </Link>
                 <button
+                className="border-2 px-2 ml-2"
                   onClick={() => {
                     handleRemove(book.isbn);
                   }}
@@ -83,10 +90,12 @@ const ShowAdmin = () => {
                   Remove
                 </button>
               </td>
+              <td><QRCodeComponent value={`http://localhost:3000/books/${book.isbn}`} /></td>
             </tr>
           ))}
         </tbody>
       </table>
+      
     </div>
   );
 };
